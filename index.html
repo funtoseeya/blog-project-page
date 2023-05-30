@@ -270,14 +270,33 @@
     }
   </script>
 
-  <script>
-    // Share button functionality
-    const shareButton = document.getElementById('shareButton');
-    shareButton.addEventListener('click', function () {
-      const currentURL = window.location.href;
-      alert(`Share this URL: ${currentURL}`);
-    });
-  </script>
+<script>
+  // Share button functionality
+  const shareButton = document.getElementById('shareButton');
+  shareButton.addEventListener('click', function () {
+    const currentURL = window.location.href;
+    const alertMessage = ` ${currentURL}`;
+
+    // Create a temporary textarea element to hold the URL
+    const textarea = document.createElement('textarea');
+    textarea.value = currentURL;
+    textarea.style.position = 'fixed'; // Ensure the textarea is positioned off-screen
+    document.body.appendChild(textarea);
+    textarea.select();
+
+    try {
+      // Copy the URL to the clipboard
+      document.execCommand('copy');
+      alert(`This page's URL has been copied to your clipboard for you to share with friends, colleagues and family.`);
+    } catch (error) {
+      console.error('Unable to copy URL to clipboard:', error);
+      alert(alertMessage); // Fallback if copying to clipboard fails
+    }
+
+    document.body.removeChild(textarea); // Clean up the temporary textarea
+  });
+</script>
+
 <script>
    // Tab functionality
    const tabLinks = document.querySelectorAll('.nav-link');
